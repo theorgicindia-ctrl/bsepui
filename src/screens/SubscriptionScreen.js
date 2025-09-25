@@ -2,11 +2,12 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import S from '../theme/styles';
 import C from '../theme/colors';
-import { useAuth } from '../context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { useSubscription } from '../context/SubscriptionContext';
 
 export default function SubscriptionScreen() {
-  const { user } = useAuth();
+
+  const { user } = useContext(AuthContext);
   const { subscribeMonthly, loading } = useSubscription();
 
   if (!user) return <View style={S.center}><Text style={{color:C.text}}>Please login to view subscription.</Text></View>;

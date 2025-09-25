@@ -5,11 +5,12 @@ import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import * as Application from 'expo-application';
 import C from '../theme/colors';
 import S from '../theme/styles';
-import { useAuth } from '../context/AuthContext';
+import { AuthContext } from "../context/AuthContext";
 
 export default function DrawerContent(props) {
   const { navigation } = props;
-  const { user, logout } = useAuth();
+   
+    const { user, logout } = useContext(AuthContext);
 
   return (
     <View style={{flex:1, backgroundColor: C.bg}}>

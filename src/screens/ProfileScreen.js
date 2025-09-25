@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import S from '../theme/styles';
 import C from '../theme/colors';
-import { useAuth } from '../context/AuthContext';
+import { AuthContext } from "../context/AuthContext";
 
 export default function ProfileScreen() {
-  const { user, login } = useAuth();
+  const { user } = useContext(AuthContext);
   const [email, setEmail] = useState(user?.email || 'demo@example.com');
   const [loading, setLoading] = useState(false);
 

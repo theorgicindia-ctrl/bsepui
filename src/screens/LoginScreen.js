@@ -3,13 +3,14 @@ import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 
 export default function LoginScreen({ navigation }) {
-  const { loginUser, registerUser } = useContext(AuthContext);
+  const { user, loginUser, registerUser  } = useContext(AuthContext);
+
   const [isRegister, setIsRegister] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-
+    
   const handleSubmit = async () => {
     try {
       if (isRegister) {
@@ -18,7 +19,7 @@ export default function LoginScreen({ navigation }) {
         setIsRegister(false);
       } else {
         await loginUser(email, password);
-        navigation.replace("DrawerRoot"); // go to drawer after login
+        navigation.replace("DrawerRoot");
       }
     } catch (err) {
       alert("Error: " + err);

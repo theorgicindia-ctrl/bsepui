@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 
 export default function PlansScreen() {
   const { user } = useContext(AuthContext);
+  
   const [plans, setPlans] = useState([]);
 
   useEffect(() => {

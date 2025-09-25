@@ -1,12 +1,13 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 import { subscribeUser } from '../services/api';
-import { useAuth } from './AuthContext';
+import { AuthContext } from "../context/AuthContext";
 
 const SubContext = createContext();
 export const useSubscription = () => useContext(SubContext);
 
 export function SubscriptionProvider({ children }) {
-const { login, logout, user } = useAuth();
+ 
+    const { login, logout, user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   const subscribeMonthly = async () => {
