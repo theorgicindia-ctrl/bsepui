@@ -39,3 +39,7 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+/.vs/bsep-tech-support-app/CopilotIndices/17.14.1091.29919
+/.vs/bsep-tech-support-app/FileContentIndex
+/.vs/bsep-tech-support-app/v17
+/.vs/slnx.sqlite
