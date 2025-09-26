@@ -18,8 +18,8 @@ export default function LoginScreen({ navigation }) {
         alert("Registration successful! Please login.");
         setIsRegister(false);
       } else {
-        await loginUser(email, password);
-        navigation.replace("DrawerRoot");
+        await loginUser(email, password);       
+      + navigation.replace("Main");
       }
     } catch (err) {
       alert("Error: " + err);

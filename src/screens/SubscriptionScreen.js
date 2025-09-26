@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import S from '../theme/styles';
 import C from '../theme/colors';
 import { AuthContext } from '../context/AuthContext';
 import { useSubscription } from '../context/SubscriptionContext';
+
 
 export default function SubscriptionScreen() {
 
