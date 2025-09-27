@@ -1,62 +1,44 @@
-// src/context/AuthContext.js
+// context/AuthContext.js
+import React, { createContext, useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import React, { createContext, useState } from "react";
-import axios from "axios";
-import config from "../config/extra"; // <-- central API base url
-
-// Create context
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUserState] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // 🔹 Register new user
-  const registerUser = async (email, password, name, phone) => {
+  // Load user from storage at app start
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem("user");
+        if (storedUser) setUserState(JSON.parse(storedUser));
+      } catch (e) {
+        console.error("Failed to load user", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadUser();
+  }, []);
+
+  // Save or remove user in storage
+  const setUser = async (newUser) => {
     try {
-      const res = await axios.post(`${config.apiBaseUrl}/users/register`, {
-        email,
-        passwordHash: password, // backend hashes internally
-        name,
-        phone,
-      });
-      return res.data;
-    } catch (err) {
-      console.error("Register error:", err.response?.data || err.message);
-      throw err.response?.data || err.message;
+      if (newUser) {
+        await AsyncStorage.setItem("user", JSON.stringify(newUser));
+      } else {
+        await AsyncStorage.removeItem("user");
+      }
+      setUserState(newUser);
+    } catch (e) {
+      console.error("Failed to save user", e);
     }
   };
-
-  // 🔹 Login user
-  const loginUser = async (email, password) => {
-    try {
-      const res = await axios.post(`${config.apiBaseUrl}/users/login`, {
-        email,
-        password,
-      });
-      setUser(res.data); // save logged-in user
-      return res.data;
-    } catch (err) {
-      console.error("Login error:", err.response?.data || err.message);
-      throw err.response?.data || err.message;
-    }
-  };
-
-  // 🔹 Get current user
-  const getUser = () => user;
-
-  // 🔹 Logout
-  const logout = () => setUser(null);
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        registerUser,
-        loginUser,
-        getUser,
-        logout,
-      }}
-    >
+    <AuthContext.Provider value={{ user, setUser, loading }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,39 +1,45 @@
 {
   "expo": {
-    "name": "bsep-tech-support-app",
-    "slug": "bsep-tech-support-app",
+    "name": "BSEP Tech Support",
+    "slug": "bsepui",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/homescreen.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#facc15"
     },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.rahulruhela.bseptechsupportapp",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "usesAppleSignIn": true
     },
     "android": {
       "package": "com.rahulruhela.bseptechsupportapp",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/homescreen.png",
+        "backgroundColor": "#57C785"
       },
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.jpg",
+      "bundler": "metro"
     },
     "extra": {
       "eas": {
         "projectId": "af857254-3be5-446f-a34f-4201e4166f42"
       }
-    }
+    },
+    "scheme": "bsep",
+    "plugins": [
+      "expo-web-browser"
+    ]
   }
 }
