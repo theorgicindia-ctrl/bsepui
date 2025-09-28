@@ -28,9 +28,7 @@ export default function PlansScreen({ navigation }) {
       try {
         // ✅ Fix: backend now returns { plans: [...] }
         const resPlans = await axios.get(`${config.apiBaseUrl}/plans`);
-        setPlans(resPlans.data?.plans || []);
-
-      
+        setPlans(resPlans.data?.plans || []);     
 
         if (user?.id) {
           const resSubs = await axios.get(
