@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "BSEP Tech Support",
-    "slug": "bsepui",
+    "slug": "bsep-tech-support-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,7 +14,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rahulruhela.bseptechsupportapp", // change when ios app is published and keep this in ios client as bundle id Bundle ID: com.yourcompany.bseptechsupport. 
+      "bundleIdentifier": "com.rahulruhela.bseptechsupportapp",
+      "buildNumber": "1.0.0",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       },
@@ -22,6 +23,7 @@
     },
     "android": {
       "package": "com.rahulruhela.bseptechsupportapp",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/homescreen.png",
         "backgroundColor": "#57C785"
@@ -39,7 +41,8 @@
     },
     "scheme": "bsep",
     "plugins": [
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-dev-client"
     ]
   }
 }

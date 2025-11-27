@@ -61,7 +61,7 @@ export default function PlansScreen({ navigation }) {
             setSubmittingPlanId(planId);
             const url = `${config.apiBaseUrl}/subscriptions/${user.id}/subscribe/${planId}?minutes=1&demo=true&billing=${billingCycle}`;
             await axios.post(url);
-            Alert.alert("Success", "Successfully enrolled in the plan (Demo).");
+            Alert.alert("Success", "Successfully enrolled in the plan.");
 
             // 👉 Go to Subscription child screen inside Plans tab
             navigation.navigate("Subscription");
