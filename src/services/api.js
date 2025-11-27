@@ -1,10 +1,20 @@
-import axios from 'axios';
-import cfg from '../config/extra';
+﻿//import axios from 'axios';
+//import cfg from '../config/extra';
+
+//const api = axios.create({
+//  baseURL: `${cfg.apiBaseUrl}/api`,
+//  timeout: 8000,
+//});
+
+// src/services/api.js
+import axios from "axios";
+import cfg from "../config/extra";
 
 const api = axios.create({
-  baseURL: `${cfg.apiBaseUrl}/api`,
-  timeout: 8000,
+    baseURL: cfg.apiBaseUrl, // ✅ remove extra /api
+    timeout: 8000,
 });
+
 
 // export async function getUser(email) {
 //   const res = await api.get(`/user/${encodeURIComponent(email)}`);

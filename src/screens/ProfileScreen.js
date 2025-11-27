@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+﻿import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -12,9 +12,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import config from "../config/extra";
 import { AuthContext } from "../context/AuthContext";
-
+import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../context/AuthContext";
 export default function ProfileScreen() {
-  const { user, logoutUser, setUser } = useContext(AuthContext);
+   /* const { user, logoutUser, setUser } = useContext(AuthContext);*/
+
+    const navigation = useNavigation(); 
+    const { user, logoutUser, setUser } = useAuth();
   const [name, setName] = useState(user?.name || "");
   const [phone, setPhone] = useState(user?.phone || "");
   const [email, setEmail] = useState(user?.email || "");
@@ -38,10 +42,18 @@ export default function ProfileScreen() {
     }
   };
 
-  const onLogout = () => {
-    logoutUser(); // clear user session
-    Alert.alert("Logged out", "You can login with another account now.");
-  };
+    //const onLogout = async () => {
+    //    await logoutUser(); // clears AsyncStorage + user in context
+
+    //    navigation.navigate("Login");
+
+    //    Alert.alert("Logged out", "You can login with another account now.");
+    //};
+    const onLogout = async () => {
+        await logoutUser(); // this will set user = null
+        Alert.alert("Logged out", "You can login with another account now.");
+    };
+
 
   return (
     <SafeAreaView style={styles.safe}>

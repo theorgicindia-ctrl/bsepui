@@ -14,6 +14,9 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import config from "../config/extra";
 import { AuthContext } from "../context/AuthContext";
+import ScreenContainer from "../ScreenContainer";
+import S from "../theme/styles";
+import C from "../theme/colors";
 
 export default function SupportScreen() {
   const { user } = useContext(AuthContext);
@@ -52,7 +55,7 @@ export default function SupportScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
+      <ScreenContainer>
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.heading}>Support Center</Text>
         <Text style={styles.subtext}>
@@ -123,7 +126,7 @@ export default function SupportScreen() {
 
         
       </ScrollView>
-    </SafeAreaView>
+    </ScreenContainer>
   );
 }
 

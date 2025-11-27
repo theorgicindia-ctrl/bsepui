@@ -12,6 +12,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import axios from "axios";
 import config from "../config/extra";
 import { AuthContext } from "../context/AuthContext";
+import ScreenContainer from "../ScreenContainer";
+import S from "../theme/styles";
+import C from "../theme/colors";
 
 export default function RegisterScreen({ navigation }) {
   const { setUser } = useContext(AuthContext);
@@ -42,7 +45,7 @@ export default function RegisterScreen({ navigation }) {
       }
 
       setUser(res.data);
-      navigation.replace("Main");
+  /*    navigation.replace("Main");*/
     } catch (err) {
       const msg =
         err?.response?.data?.message ||
@@ -55,8 +58,10 @@ export default function RegisterScreen({ navigation }) {
     }
   };
 
-  return (
-    <LinearGradient colors={["#2563eb", "#14b8a6"]} style={styles.bg}>
+    return (
+
+        <ScreenContainer>
+  {/*  <LinearGradient colors={["#2563eb", "#14b8a6"]} style={styles.bg}>*/}
       <View style={styles.container}>
         <Text style={styles.title}>Create Account</Text>
 
@@ -106,7 +111,8 @@ export default function RegisterScreen({ navigation }) {
           <Text style={{ color: "#fff" }}>Already have an account? Login</Text>
         </TouchableOpacity>
       </View>
-    </LinearGradient>
+            {/*  </LinearGradient>*/}
+        </ScreenContainer>
   );
 }
 

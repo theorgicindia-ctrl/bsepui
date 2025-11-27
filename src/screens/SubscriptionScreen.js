@@ -11,7 +11,9 @@ import {
 import axios from "axios";
 import config from "../config/extra";
 import { AuthContext } from "../context/AuthContext";
-
+import ScreenContainer from "../ScreenContainer";
+import S from "../theme/styles";
+import C from "../theme/colors";
 // ⚠️ Apple restore purchases (commented for now)
 // import * as InAppPurchases from "expo-in-app-purchases";
 
@@ -52,7 +54,7 @@ export default function SubscriptionScreen() {
   const lastCancelled = subs.find((s) => !s.subscription?.isActive);
 
   return (
-    <SafeAreaView style={styles.safe}>
+      <ScreenContainer>
       <View style={styles.card}>
         <Text style={styles.title}>My Subscription</Text>
         <View style={styles.divider} />
@@ -200,7 +202,7 @@ export default function SubscriptionScreen() {
           <Text style={styles.restoreText}>Restore Purchases (Apple)</Text>
         </TouchableOpacity> */}
       </View>
-    </SafeAreaView>
+          </ScreenContainer>
   );
 }
 

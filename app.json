@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rahulruhela.bseptechsupportapp",
+      "bundleIdentifier": "com.rahulruhela.bseptechsupportapp", // change when ios app is published and keep this in ios client as bundle id Bundle ID: com.yourcompany.bseptechsupport. 
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       },

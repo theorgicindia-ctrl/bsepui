@@ -2,13 +2,26 @@ import React from "react";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import ScreenContainer from "../ScreenContainer";
 import S from "../theme/styles";
 import C from "../theme/colors";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useAuth } from "../context/AuthContext";
 
 export default function HomeScreen() {
-  return (
-    <SafeAreaView style={S.screen}>
+    const { user, logoutUser } = useAuth();
+
+    //const { user, logout } = useContext(AuthContext);
+
+    const onLogoutPress = async () => {
+        await logoutUser();
+        // No manual navigation needed:
+        // RootNavigator will see user === null and show LoginScreen.
+    };
+
+
+    return (
+        <ScreenContainer>
       <View style={[S.card, { alignItems: "center" }]}>
         <MaterialIcons name="support-agent" size={36} color={C.primary} />
         <Text style={[S.title, { marginTop: 8 }]}>Tech Support</Text>
@@ -38,6 +51,6 @@ export default function HomeScreen() {
         <Text style={S.listItem}>👉 Subscription</Text>
         <Text style={S.listItem}>👉 Support</Text>
       </View>
-    </SafeAreaView>
+        </ScreenContainer>
   );
 }

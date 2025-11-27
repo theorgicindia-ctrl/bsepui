@@ -18,6 +18,9 @@ import * as WebBrowser from "expo-web-browser";
 import * as AuthSession from "expo-auth-session";
 import axios from "axios";
 import config from "../config/extra";
+import ScreenContainer from "../ScreenContainer";
+import S from "../theme/styles";
+import C from "../theme/colors";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -37,15 +40,16 @@ export default function LoginScreen({ navigation }) {
 
   // 🔹 Redirect URI (forces Expo proxy instead of exp://)
   const redirectUri = AuthSession.makeRedirectUri({
-    useProxy: true,
+      useProxy: true,
+      scopes: ["profile", "email"],
   });
 
   // 🔹 Google Auth
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
-      "971801086775-4hd135e232ovpifasi2tpq0fdpu0e3ts.apps.googleusercontent.com", // Web client ID from Google Cloud
-    iosClientId: "YOUR_IOS_CLIENT_ID.apps.googleusercontent.com",
-    androidClientId: "YOUR_ANDROID_CLIENT_ID.apps.googleusercontent.com",
+      "685685363348-9v0fsc2pcj3m3mfsd4aassmmhj87abdp.apps.googleusercontent.com", // Web client ID from Google Cloud
+    iosClientId: "685685363348-9v0fsc2pcj3m3mfsd4aassmmhj87abdp.apps.googleusercontent.com",
+      androidClientId: null,
     redirectUri,
   });
 
@@ -77,7 +81,9 @@ export default function LoginScreen({ navigation }) {
 
       setUser(res.data);
       // 👇 Make sure this matches your navigator
-      navigation.replace("Main");
+     /*   navigation.replace("Main");*/
+
+
     } catch (err) {
       const msg =
         err?.response?.data?.message ||
@@ -110,7 +116,7 @@ export default function LoginScreen({ navigation }) {
       });
 
       setUser(res.data);
-      navigation.replace("Main");
+  /*    navigation.replace("Main");*/
     } catch (err) {
       Alert.alert("Google Login Failed", err?.message || "Try again");
     } finally {
@@ -128,22 +134,32 @@ export default function LoginScreen({ navigation }) {
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
         ],
       });
-
-      const appleUser = {
+        debugger
+        alert("credential "+credential);
+        console.log("Apple credential:", JSON.stringify(credential, null, 2));
+        const appleUser = {
+          
         email: credential.email || "",
         name: credential.fullName?.givenName || "Apple User",
         provider: "apple",
         providerId: credential.user,
       };
-
+        console.log("Apple credential:", JSON.stringify(credential, null, 2));
       const res = await axios.post(
         `${config.apiBaseUrl}/users/social-login`,
         appleUser
       );
       setUser(res.data);
-      navigation.replace("Main");
+   /*   navigation.replace("Main");*/
     } catch (e) {
-      if (e.code === "ERR_CANCELED") {
+
+        if (
+                e.code === "ERR_REQUEST_CANCELED" ||
+                e.code === "ERR_CANCELED" ||
+                e.code === "ERR_APPLE_SIGN_IN_CANCELLED"
+            ) 
+
+        {
         Alert.alert("Apple login cancelled");
       } else {
         Alert.alert("Apple login error", e.message);
@@ -154,36 +170,42 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <LinearGradient colors={["#2563eb", "#14b8a6"]} style={styles.bg}>
-      <View style={styles.container}>
-        <Image
-          source={require("../../assets/iconold.png")}
-          style={styles.image}
-          resizeMode="contain"
-        />
+      //<LinearGradient colors={["#2563eb", "#14b8a6"]} style={styles.bg}>
+          <ScreenContainer scroll={false}>
+          <View style={S.loginHeader}>
+              <Image
+                  source={require("../../assets/splash-icon.png")}
+                  style={S.loginLogo}
+                  resizeMode="contain"
+              />
+              <Text style={S.loginTitle}>BSEP Support</Text>
+              <Text style={S.loginSubtitle}>
+                  Secure tech protection for all your devices.
+              </Text>
+          </View>
 
-        <Text style={styles.title}>Welcome</Text>
-        <Text style={styles.subtitle}>Sign in to continue</Text>
 
-        {loading && (
-          <ActivityIndicator size="large" color="#fff" style={{ marginVertical: 15 }} />
-        )}
-
-        {/* 🔹 Custom Login Form */}
+          <View style={S.loginForm}>
+              {loading && (
+                  <ActivityIndicator color={C.primary} style={S.loadingIndicator} />
+              )}
+   
         <TextInput
-          style={styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          keyboardType="email-address"
+                  style={S.input}
+                  placeholder="Email"
+                  placeholderTextColor="#6B7280"
+                  value={email}
+                  onChangeText={setEmail}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
         />
         <TextInput
-          style={styles.input}
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
+                  style={S.input}
+                  placeholder="Password"
+                  placeholderTextColor="#6B7280"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
         />
 
         <TouchableOpacity
@@ -230,7 +252,8 @@ export default function LoginScreen({ navigation }) {
           />
         )}
       </View>
-    </LinearGradient>
+      {/*</LinearGradient>*/}
+      </ScreenContainer >
   );
 }
 

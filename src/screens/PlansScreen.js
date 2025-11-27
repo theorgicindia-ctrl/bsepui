@@ -13,6 +13,10 @@ import axios from "axios";
 import config from "../config/extra";
 import { AuthContext } from "../context/AuthContext";
 
+import ScreenContainer from "../ScreenContainer";
+import S from "../theme/styles";
+import C from "../theme/colors";
+
 export default function PlansScreen({ navigation }) {
   const { user } = useContext(AuthContext);
   const [plans, setPlans] = useState([]);
@@ -163,7 +167,7 @@ export default function PlansScreen({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.safe}>
+      <ScreenContainer>
       <View style={styles.tabs}>
         <TouchableOpacity
           style={[styles.tab, billingCycle === "monthly" && styles.tabActive]}
@@ -199,7 +203,7 @@ export default function PlansScreen({ navigation }) {
         contentContainerStyle={styles.listPad}
         renderItem={renderPlan}
       />
-    </SafeAreaView>
+      </ScreenContainer>
   );
 }
 
