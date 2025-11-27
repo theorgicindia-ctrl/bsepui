@@ -1,4 +1,4 @@
-// src/styles.js
+// src/theme/styles.js
 import { StyleSheet, Platform } from "react-native";
 import C from "./colors";
 
@@ -22,6 +22,15 @@ export default StyleSheet.create({
     screenCenter: {
         justifyContent: "center",
     },
+
+    // For screens that wrap their own ScrollView (Dashboard etc.)
+    scrollView: {
+        flex: 1,
+    },
+    scrollViewContent: {
+        paddingBottom: 32,
+    },
+
     scrollContent: {
         paddingBottom: 24,
     },
@@ -141,6 +150,7 @@ export default StyleSheet.create({
     loginForm: {
         width: "100%",
     },
+
     chartContainer: {
         marginTop: 16,
         paddingVertical: 16,
@@ -150,9 +160,9 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderColor: C.border,
 
-        // MOST IMPORTANT:
-        minHeight: 260,        // prevents overlap
-        overflow: "visible",   // charts need this!
+        // Prevents overlap
+        minHeight: 260,
+        overflow: "visible",
     },
 
     // --- DASHBOARD / ANALYTICS ---
@@ -319,20 +329,42 @@ export default StyleSheet.create({
 
     statusGood: {
         fontSize: 12,
-        color: "#22C55E",
+        color: C.success,
     },
 
     statusWarn: {
         fontSize: 12,
-        color: "#FACC15",
+        color: C.warning,
     },
 
     statusBad: {
         fontSize: 12,
-        color: "#F97316",
+        color: C.danger,
     },
 
-
+    // Live pill for dashboard (animated)
+    liveBadge: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        borderRadius: 999,
+        backgroundColor: "rgba(34,197,94,0.12)",
+    },
+    liveDot: {
+        width: 8,
+        height: 8,
+        borderRadius: 999,
+        backgroundColor: C.success,
+        marginRight: 6,
+    },
+    liveText: {
+        fontSize: 11,
+        color: C.subtext,
+        fontWeight: "600",
+        textTransform: "uppercase",
+        letterSpacing: 0.6,
+    },
 
     // ===== You can add screen-specific blocks here later =====
     // e.g. plansRow, planCard, profileAvatar, etc

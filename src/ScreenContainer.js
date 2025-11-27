@@ -1,4 +1,4 @@
-﻿// src/components/ScreenContainer.js
+﻿// src/ScreenContainer.js
 import React, { useRef, useEffect } from "react";
 import { View, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -10,9 +10,10 @@ import C from "./theme/colors";
 export default function ScreenContainer({ children, centerContent = false, style }) {
     const opacity = useRef(new Animated.Value(0)).current;
     const translateY = useRef(new Animated.Value(24)).current;
+    const scale = useRef(new Animated.Value(0.98)).current;
 
     useEffect(() => {
-        Animated.parallel([
+        const anim = Animated.parallel([
             Animated.timing(opacity, {
                 toValue: 1,
                 duration: 500,
@@ -23,12 +24,24 @@ export default function ScreenContainer({ children, centerContent = false, style
                 duration: 500,
                 useNativeDriver: true,
             }),
-        ]).start();
-    }, [opacity, translateY]);
+            Animated.spring(scale, {
+                toValue: 1,
+                useNativeDriver: true,
+                friction: 6,
+                tension: 60,
+            }),
+        ]);
+
+        anim.start();
+
+        return () => {
+            anim.stop && anim.stop();
+        };
+    }, [opacity, translateY, scale]);
 
     const animatedStyle = {
         opacity,
-        transform: [{ translateY }],
+        transform: [{ translateY }, { scale }],
     };
 
     return (

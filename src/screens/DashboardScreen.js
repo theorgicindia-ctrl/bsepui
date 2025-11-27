@@ -1,6 +1,6 @@
 // src/screens/DashboardScreen.js
-import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { View, Text, ScrollView, Animated } from "react-native";
 
 import ScreenContainer from "../ScreenContainer";
 import S from "../theme/styles";
@@ -31,13 +31,48 @@ export default function DashboardScreen() {
 
     // Quick metrics
     const metrics = {
-        loginsToday: 42, // how many times users logged in / came on site
+        loginsToday: 42,
         uniqueUsers: 28,
-        concurrentSupport: 6, // continuously getting support right now
+        concurrentSupport: 6,
         avgHandleTime: "8m 32s",
         uptime: "99.98%",
         satisfaction: "4.8 / 5",
     };
+
+    // Animated "LIVE" indicator
+    const liveAnim = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        const loop = Animated.loop(
+            Animated.sequence([
+                Animated.timing(liveAnim, {
+                    toValue: 1,
+                    duration: 900,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(liveAnim, {
+                    toValue: 0,
+                    duration: 900,
+                    useNativeDriver: true,
+                }),
+            ])
+        );
+        loop.start();
+
+        return () => {
+            loop.stop && loop.stop();
+        };
+    }, [liveAnim]);
+
+    const liveScale = liveAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [1, 1.35],
+    });
+
+    const liveOpacity = liveAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0.6, 1],
+    });
 
     return (
         <ScreenContainer>
@@ -48,10 +83,35 @@ export default function DashboardScreen() {
             >
                 {/* HEADER */}
                 <View style={S.dashboardHeader}>
-                    <Text style={S.dashboardTitle}>Support Dashboard</Text>
-                    <Text style={S.dashboardSubtitle}>
-                        Live overview of your IT & technology support performance.
-                    </Text>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                        }}
+                    >
+                        <View style={{ flex: 1, paddingRight: 12 }}>
+                            <Text style={S.dashboardTitle}>Support Dashboard</Text>
+                            <Text style={S.dashboardSubtitle}>
+                                Live overview of your IT & technology support performance.
+                            </Text>
+                        </View>
+
+                        <View>
+                            <View style={S.liveBadge}>
+                                <Animated.View
+                                    style={[
+                                        S.liveDot,
+                                        {
+                                            opacity: liveOpacity,
+                                            transform: [{ scale: liveScale }],
+                                        },
+                                    ]}
+                                />
+                                <Text style={S.liveText}>Live</Text>
+                            </View>
+                        </View>
+                    </View>
                 </View>
 
                 {/* METRIC CARDS */}
